@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://8kbccmpvcbn2"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_0e183"]
+[ext_resource type="Texture2D" uid="uid://dtvy2pvx2qq7f" path="res://assets/player_idle.png" id="1_gke1b"]
+[ext_resource type="Texture2D" uid="uid://cixpmxroy4bpp" path="res://assets/player_hit.png" id="2_rpg6i"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_l7k7h"]
+radius = 97.5
+height = 370.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c454y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gke1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_rpg6i")
+}],
+"loop": false,
+"name": &"default",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_gke1b")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="player" type="Area2D"]
+script = ExtResource("1_0e183")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-13, 7)
+scale = Vector2(0.4, 0.4)
+shape = SubResource("CapsuleShape2D_l7k7h")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_c454y")
+animation = &"idle"
+
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_finished"]
